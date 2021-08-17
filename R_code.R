@@ -7,9 +7,11 @@ library(lubridate)
 library(tidyr)
 library(rvest)
 
-data <- read_csv("Desktop/multiple_charts/data.csv")
+data <- read_csv("restaurants_multiple_charts/data.csv")
 # View(data)
 data <- data[-c(52,53,54,55),]
+data <- data[,-c(2,3)]
+        
 
 url = 'https://excelnotes.com/states-abbreviations-in-us/'
 
@@ -44,13 +46,13 @@ final_data <-
 final_data %>%
   ggplot(aes(x = lubridate::my(month), y = number, group=1)) +
   geom_line(color = "black") +
-  geom_rect(mapping=aes(xmin=lubridate::my('Dec-19'), xmax=lubridate::my('Mar-20'), ymin=0, ymax=2000000), fill = "#ADD8E6", alpha = .05) +
+  geom_rect(mapping=aes(xmin=lubridate::my('Feb-20'), xmax=lubridate::my('Mar-20'), ymin=0, ymax=2000000), fill = "#97BA58", alpha = .05) +
   geom_rect(mapping=aes(xmin=lubridate::my('Mar-20'), xmax=lubridate::my('Jun-21'), ymin=0, ymax=2000000), fill = "#FF9999", alpha = .05) +
-  scale_x_continuous(breaks = c(lubridate::my('Dec-19'),lubridate::my('Jun-21'))) +
-  scale_y_continuous(breaks = c(0,2055100)) +
+  scale_x_continuous(breaks = c(lubridate::my('Feb-20'),lubridate::my('Jun-21'))) +
+  scale_y_continuous(breaks = c(0,1459100)) +
   facet_geo(~ Abbreviation, grid = "us_state_grid2") +
-  labs(title = "Refugee Acceptance on the Decline",
-       subtitle = "Number of refugees accepted annually, 2019 - 2021",
+  labs(title = "Eating and drinking place employment trends by state from Feb 2020 t0 June 2021",
+       subtitle = "Job numbers of eating and drinking places decresed when the pandemic started and haven't bounced back yet",
        x = 'month',
        y = 'numbers') +
   theme(
